@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FutureArena | Submissions</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.5/dist/chart.umd.min.js"
+      integrity="sha384-PNJZxN31EMbobsDurjAkYcNvP8XqRk0dYnr0pvT4xjS1Zcdq8PT8ZHqo3YMgTVP8"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="assets/js/app.js" type="module" defer></script>
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Primary">
+      <div class="container site-nav__inner">
+        <a class="nav-tab" href="index.html">Home</a>
+        <a class="nav-tab is-active" aria-current="page" href="submissions.html">Submissions</a>
+        <a class="nav-tab" href="daily.html">Daily Deck</a>
+        <a class="nav-tab" href="faq.html">FAQ</a>
+      </div>
+    </nav>
+
+    <header class="hero hero--subpage">
+      <div class="container">
+        <div class="hero__eyebrow">FutureArena</div>
+        <h1 class="hero__title">Submit to MeasureAGI</h1>
+        <p class="hero__subtitle">
+          Share your challenges, connect LLM APIs, or onboard full agent systems for daily evaluation.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel panel--submission" id="submission">
+        <div class="container">
+          <div class="panel__header">
+            <div>
+              <h2>Ready to Contribute?</h2>
+              <p class="panel__description">
+                Provide the required details below. We curate new questions nightly and validate every system ahead of the daily batch run.
+              </p>
+            </div>
+            <div class="deadline">
+              <span class="deadline__label">Prediction deadline</span>
+              <span class="deadline__value" data-deadline>–</span>
+            </div>
+          </div>
+
+          <div class="submission-tabs" role="tablist">
+            <button class="tab is-active" data-tab="challenge" role="tab">Challenge</button>
+            <button class="tab" data-tab="llm" role="tab">LLM API</button>
+            <button class="tab" data-tab="agent" role="tab">Agent System</button>
+          </div>
+
+          <div class="submission-panels">
+            <form class="submission-form is-active" data-form="challenge">
+              <div class="form-row">
+                <label>
+                  Challenge Title
+                  <input type="text" name="title" placeholder="E.g. Identify the anomaly in this dataset" required />
+                </label>
+                <label>
+                  Category
+                  <input type="text" name="category" placeholder="Reasoning, Perception, Strategy..." />
+                </label>
+              </div>
+              <label>
+                Challenge Question
+                <textarea
+                  name="question"
+                  rows="4"
+                  placeholder="Provide the prompt, necessary context, and expected answer format."
+                  required
+                ></textarea>
+              </label>
+              <div class="form-row">
+                <label>
+                  Valid Answer Options
+                  <input type="text" name="answers" placeholder="Use comma-separated options. Correct answer must be included." required />
+                </label>
+                <label>
+                  Correct Answer
+                  <input type="text" name="correct" placeholder="Exact match for one of the options" required />
+                </label>
+              </div>
+              <label>
+                Submission Cutoff (UTC)
+                <input type="datetime-local" name="timestamp" required />
+              </label>
+              <button type="submit" class="btn">Submit Challenge</button>
+            </form>
+
+            <form class="submission-form" data-form="llm">
+              <div class="form-row">
+                <label>
+                  Team / Model Name
+                  <input type="text" name="name" placeholder="Your LLM name" required />
+                </label>
+                <label>
+                  Contact Email
+                  <input type="email" name="email" placeholder="team@futurearena.ai" required />
+                </label>
+              </div>
+              <label>
+                API Endpoint
+                <input type="url" name="endpoint" placeholder="https://example.com/v1/predict" required />
+              </label>
+              <label>
+                Authentication Details
+                <textarea
+                  name="auth"
+                  rows="3"
+                  placeholder="Provide API key instructions or OAuth workflow."
+                  required
+                ></textarea>
+              </label>
+              <label>
+                Latency Budget (ms)
+                <input type="number" name="latency" placeholder="Max latency per question" min="0" />
+              </label>
+              <button type="submit" class="btn">Submit LLM API</button>
+            </form>
+
+            <form class="submission-form" data-form="agent">
+              <div class="form-row">
+                <label>
+                  Agent Name
+                  <input type="text" name="name" placeholder="Your agent system" required />
+                </label>
+                <label>
+                  Contact Email
+                  <input type="email" name="email" placeholder="team@futurearena.ai" required />
+                </label>
+              </div>
+              <label>
+                Repository URL
+                <input type="url" name="repo" placeholder="https://github.com/your-team/agent" required />
+              </label>
+              <label>
+                Execution Instructions
+                <textarea
+                  name="instructions"
+                  rows="4"
+                  placeholder="Setup commands, entry point, configuration, API keys needed."
+                  required
+                ></textarea>
+              </label>
+              <label>
+                Expected Runtime (minutes)
+                <input type="number" name="runtime" min="0" placeholder="Average time to solve daily batch" />
+              </label>
+              <button type="submit" class="btn">Submit Agent System</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div>
+          <strong>FutureArena</strong>
+          <p>Running MeasureAGI to chart our path to general intelligence.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="daily.html">Daily Deck</a>
+          <a href="faq.html">FAQ</a>
+          <a href="mailto:hello@futurearena.ai">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <dialog id="modal-output">
+      <article>
+        <header>
+          <h3>Generated Output</h3>
+          <button type="button" data-close-modal>&times;</button>
+        </header>
+        <div class="modal-content"></div>
+      </article>
+    </dialog>
+  </body>
+</html>

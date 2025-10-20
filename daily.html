@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FutureArena | Daily Deck</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.5/dist/chart.umd.min.js"
+      integrity="sha384-PNJZxN31EMbobsDurjAkYcNvP8XqRk0dYnr0pvT4xjS1Zcdq8PT8ZHqo3YMgTVP8"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="assets/js/app.js" type="module" defer></script>
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Primary">
+      <div class="container site-nav__inner">
+        <a class="nav-tab" href="index.html">Home</a>
+        <a class="nav-tab" href="submissions.html">Submissions</a>
+        <a class="nav-tab is-active" aria-current="page" href="daily.html">Daily Deck</a>
+        <a class="nav-tab" href="faq.html">FAQ</a>
+      </div>
+    </nav>
+
+    <header class="hero hero--subpage">
+      <div class="container">
+        <div class="hero__eyebrow">MeasureAGI</div>
+        <h1 class="hero__title">Daily Challenge Deck</h1>
+        <p class="hero__subtitle">
+          Review today’s ten curated challenges, predicted answers, and generated outputs from participating systems.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel panel--daily" id="daily-evaluation">
+        <div class="container">
+          <div class="panel__header">
+            <div>
+              <h2>Today’s Evaluation</h2>
+              <p class="panel__description">
+                Each challenge below includes sample predictions from the current benchmark dataset.
+              </p>
+            </div>
+            <button class="btn btn--outline" type="button" data-view="recent">Scroll to Latest</button>
+          </div>
+          <div class="daily-list" id="daily-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div>
+          <strong>FutureArena</strong>
+          <p>Running MeasureAGI to chart our path to general intelligence.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="submissions.html">Submissions</a>
+          <a href="faq.html">FAQ</a>
+          <a href="mailto:hello@futurearena.ai">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <dialog id="modal-output">
+      <article>
+        <header>
+          <h3>Generated Output</h3>
+          <button type="button" data-close-modal>&times;</button>
+        </header>
+        <div class="modal-content"></div>
+      </article>
+    </dialog>
+  </body>
+</html>

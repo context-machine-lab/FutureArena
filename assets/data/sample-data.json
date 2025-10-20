@@ -1,0 +1,259 @@
+{
+  "meta": {
+    "campaignStart": "2024-07-01",
+    "currentDay": 27,
+    "nextDeadlineUTC": "2024-07-28T19:00:00Z"
+  },
+  "calendarDays": [
+    { "day": 1, "date": "2024-07-01", "status": "agi", "correct": 9, "topPerformer": "Aurora-2", "note": "Inaugural AGI Day", "streak": 1 },
+    { "day": 2, "date": "2024-07-02", "status": "evaluating", "correct": 7, "topPerformer": "Atlas-Agent", "note": "Awaiting two human verifications", "streak": 0 },
+    { "day": 3, "date": "2024-07-03", "status": "agi", "correct": 9, "topPerformer": "Aurora-2", "note": "Spatial reasoning benchmark cleared", "streak": 1 },
+    { "day": 4, "date": "2024-07-04", "status": "agi", "correct": 10, "topPerformer": "Navigator-XL", "note": "Perfect recall over long-context prompt", "streak": 2 },
+    { "day": 5, "date": "2024-07-05", "status": "missed", "correct": 6, "topPerformer": "Atlas-Agent", "note": "Latency miss on two submissions", "streak": 0 },
+    { "day": 6, "date": "2024-07-06", "status": "agi", "correct": 9, "topPerformer": "Navigator-XL", "note": "Reasoning mix regained AGI status", "streak": 1 },
+    { "day": 7, "date": "2024-07-07", "status": "agi", "correct": 9, "topPerformer": "Aurora-2", "note": "Hybrid knowledge tasks succeeded", "streak": 2 },
+    { "day": 8, "date": "2024-07-08", "status": "evaluating", "correct": 8, "topPerformer": "Navigator-XL", "note": "Human review for ambiguous answer", "streak": 0 },
+    { "day": 9, "date": "2024-07-09", "status": "agi", "correct": 9, "topPerformer": "Atlas-Agent", "note": "Temporal planning puzzle solved", "streak": 1 },
+    { "day": 10, "date": "2024-07-10", "status": "agi", "correct": 9, "topPerformer": "Aurora-2", "note": "Multi-hop QA run completed early", "streak": 2 },
+    { "day": 11, "date": "2024-07-11", "status": "agi", "correct": 10, "topPerformer": "Navigator-XL", "note": "Vision-language fusion pass", "streak": 3 },
+    { "day": 12, "date": "2024-07-12", "status": "missed", "correct": 5, "topPerformer": "Aurora-2", "note": "Result embargo breached by two teams", "streak": 0 },
+    { "day": 13, "date": "2024-07-13", "status": "agi", "correct": 9, "topPerformer": "Atlas-Agent", "note": "Strategic game tree cracked", "streak": 1 },
+    { "day": 14, "date": "2024-07-14", "status": "agi", "correct": 9, "topPerformer": "Navigator-XL", "note": "Code synthesis challenge passed", "streak": 2 },
+    { "day": 15, "date": "2024-07-15", "status": "agi", "correct": 9, "topPerformer": "Aurora-2", "note": "Robust reasoning over noisy inputs", "streak": 3 },
+    { "day": 16, "date": "2024-07-16", "status": "evaluating", "correct": 8, "topPerformer": "Atlas-Agent", "note": "Adjudicating human baseline tie", "streak": 0 },
+    { "day": 17, "date": "2024-07-17", "status": "agi", "correct": 9, "topPerformer": "Navigator-XL", "note": "Collaborative planning mission success", "streak": 1 },
+    { "day": 18, "date": "2024-07-18", "status": "agi", "correct": 9, "topPerformer": "Aurora-2", "note": "Context-heavy logic puzzle solved", "streak": 2 },
+    { "day": 19, "date": "2024-07-19", "status": "agi", "correct": 9, "topPerformer": "Atlas-Agent", "note": "Fast adaptation to adversarial prompt", "streak": 3 },
+    { "day": 20, "date": "2024-07-20", "status": "missed", "correct": 6, "topPerformer": "Navigator-XL", "note": "Two LLMs failed safety filters", "streak": 0 },
+    { "day": 21, "date": "2024-07-21", "status": "agi", "correct": 9, "topPerformer": "Aurora-2", "note": "Knowledge distillation variant #3", "streak": 1 },
+    { "day": 22, "date": "2024-07-22", "status": "agi", "correct": 9, "topPerformer": "Navigator-XL", "note": "Long-horizon planning returned", "streak": 2 },
+    { "day": 23, "date": "2024-07-23", "status": "agi", "correct": 10, "topPerformer": "Atlas-Agent", "note": "Perfect reinforcement meta-eval", "streak": 3 },
+    { "day": 24, "date": "2024-07-24", "status": "agi", "correct": 9, "topPerformer": "Aurora-2", "note": "Cross-lingual inference challenge", "streak": 4 },
+    { "day": 25, "date": "2024-07-25", "status": "evaluating", "correct": 8, "topPerformer": "Navigator-XL", "note": "Manual check on open-form answer", "streak": 0 },
+    { "day": 26, "date": "2024-07-26", "status": "agi", "correct": 9, "topPerformer": "Aurora-2", "note": "Tool-use orchestration succeeded", "streak": 1 },
+    { "day": 27, "date": "2024-07-27", "status": "agi", "correct": 9, "topPerformer": "Atlas-Agent", "note": "Robotics sim evaluation cleared", "streak": 2 }
+  ],
+  "dailyChallenges": [
+    {
+      "id": "DAY27-01",
+      "day": 27,
+      "title": "Simulated Warehouse Routing",
+      "category": "Planning",
+      "author": "FutureArena Ops",
+      "question": "Choose the optimal route order for the autonomous forklift given the following map (A,B,C,D) and return constraint.",
+      "correctAnswer": "Route C",
+      "answerOptions": ["Route A", "Route B", "Route C", "Route D"],
+      "timestamp": "2024-07-27T15:05:00Z",
+      "predictions": [
+        { "participantId": "llm-aurora", "answer": "Route C", "isCorrect": true, "confidence": 0.86, "latencyMs": 3800, "output": "Selected Route C after evaluating travel time and load constraints; Route C minimizes empty travel legs." },
+        { "participantId": "agent-atlas", "answer": "Route C", "isCorrect": true, "confidence": 0.91, "latencyMs": 5200, "output": "Graph search heuristics identify C as optimal with 14% buffer under deadline." },
+        { "participantId": "llm-navigator", "answer": "Route B", "isCorrect": false, "confidence": 0.62, "latencyMs": 4100, "output": "Route B chosen due to shortest initial path, overlooked return constraint." }
+      ]
+    },
+    {
+      "id": "DAY27-02",
+      "day": 27,
+      "title": "Multi-hop Trivia",
+      "category": "Reasoning",
+      "author": "Community Contributor",
+      "question": "Which scientist succeeded a Nobel laureate who first isolated radium, and later discovered the artificial nuclear reaction?",
+      "correctAnswer": "Irène Joliot-Curie",
+      "answerOptions": ["Irène Joliot-Curie", "Lise Meitner", "Enrico Fermi", "Otto Hahn"],
+      "timestamp": "2024-07-27T15:18:00Z",
+      "predictions": [
+        { "participantId": "llm-aurora", "answer": "Irène Joliot-Curie", "isCorrect": true, "confidence": 0.79, "latencyMs": 6200, "output": "Linked Nobel lineage to Marie Curie and traced discovery of induced radioactivity." },
+        { "participantId": "agent-atlas", "answer": "Irène Joliot-Curie", "isCorrect": true, "confidence": 0.74, "latencyMs": 4400, "output": "Chained knowledge graph edges from radium isolation to induced radioactivity discovery." },
+        { "participantId": "llm-navigator", "answer": "Lise Meitner", "isCorrect": false, "confidence": 0.68, "latencyMs": 5900, "output": "Misattributed artificial reaction to Meitner during cross-reference step." }
+      ]
+    },
+    {
+      "id": "DAY27-03",
+      "day": 27,
+      "title": "Sensor Fusion Outlier Detection",
+      "category": "Perception",
+      "author": "FutureArena Labs",
+      "question": "Given the accelerometer readings [0.2, 0.22, 0.19, 0.88, 0.21], which reading should be flagged as an outlier before control loop execution?",
+      "correctAnswer": "0.88",
+      "answerOptions": ["0.2", "0.22", "0.19", "0.88", "0.21"],
+      "timestamp": "2024-07-27T15:30:00Z",
+      "predictions": [
+        { "participantId": "llm-aurora", "answer": "0.88", "isCorrect": true, "confidence": 0.83, "latencyMs": 2800, "output": "Z-score > 3 sigma; flagged 0.88 to avoid false braking." },
+        { "participantId": "agent-atlas", "answer": "0.88", "isCorrect": true, "confidence": 0.88, "latencyMs": 3100, "output": "Fusion filter triggered outlier rejection for reading 0.88." },
+        { "participantId": "llm-navigator", "answer": "0.21", "isCorrect": false, "confidence": 0.52, "latencyMs": 2900, "output": "Rounded values aggressively; misflagged near-mean entry." }
+      ]
+    },
+    {
+      "id": "DAY27-04",
+      "day": 27,
+      "title": "Code Interpretation",
+      "category": "Software Reasoning",
+      "author": "Community Contributor",
+      "question": "Given the Python snippet with async I/O shown, which print order will be observed?",
+      "correctAnswer": "task-b, task-c, task-a",
+      "answerOptions": ["task-a, task-b, task-c", "task-b, task-c, task-a", "task-a, task-c, task-b", "task-b, task-a, task-c"],
+      "timestamp": "2024-07-27T15:41:00Z",
+      "predictions": [
+        { "participantId": "llm-aurora", "answer": "task-b, task-c, task-a", "isCorrect": true, "confidence": 0.71, "latencyMs": 5200, "output": "Awaited gather returns tasks as scheduled; fastest tasks first." },
+        { "participantId": "agent-atlas", "answer": "task-b, task-c, task-a", "isCorrect": true, "confidence": 0.77, "latencyMs": 4300, "output": "Simulated coroutine durations to project completion ordering." },
+        { "participantId": "llm-navigator", "answer": "task-a, task-b, task-c", "isCorrect": false, "confidence": 0.55, "latencyMs": 6000, "output": "Assumed sequential scheduling; missed gather semantics." }
+      ]
+    },
+    {
+      "id": "DAY27-05",
+      "day": 27,
+      "title": "Financial Forecast Constraint",
+      "category": "Analysis",
+      "author": "FutureArena Ops",
+      "question": "Select the only revenue growth plan that stays within 85% utilization while hitting the quarterly target.",
+      "correctAnswer": "Plan Delta",
+      "answerOptions": ["Plan Alpha", "Plan Beta", "Plan Gamma", "Plan Delta"],
+      "timestamp": "2024-07-27T15:56:00Z",
+      "predictions": [
+        { "participantId": "llm-aurora", "answer": "Plan Delta", "isCorrect": true, "confidence": 0.64, "latencyMs": 6800, "output": "Linear programming found Delta meets utilization <= 0.85 and revenue threshold." },
+        { "participantId": "agent-atlas", "answer": "Plan Delta", "isCorrect": true, "confidence": 0.81, "latencyMs": 5400, "output": "Constraint solver validated Delta scenario only." },
+        { "participantId": "llm-navigator", "answer": "Plan Beta", "isCorrect": false, "confidence": 0.59, "latencyMs": 7200, "output": "Projected Beta by extrapolating year-over-year; overlooked cap." }
+      ]
+    },
+    {
+      "id": "DAY27-06",
+      "day": 27,
+      "title": "Robotic Arm Calibration",
+      "category": "Control",
+      "author": "FutureArena Labs",
+      "question": "Which calibration profile best compensates for the detected torque drift in joint 4?",
+      "correctAnswer": "Profile 3",
+      "answerOptions": ["Profile 1", "Profile 2", "Profile 3", "Profile 4"],
+      "timestamp": "2024-07-27T16:09:00Z",
+      "predictions": [
+        { "participantId": "llm-aurora", "answer": "Profile 3", "isCorrect": true, "confidence": 0.67, "latencyMs": 4700, "output": "Profile 3 re-zeros offset and compensates the 0.4Nm drift." },
+        { "participantId": "agent-atlas", "answer": "Profile 3", "isCorrect": true, "confidence": 0.74, "latencyMs": 5100, "output": "Adaptive control simulation validated profile 3 as stable." },
+        { "participantId": "llm-navigator", "answer": "Profile 2", "isCorrect": false, "confidence": 0.48, "latencyMs": 5000, "output": "Selected profile 2 due to lower RMS without correcting drift." }
+      ]
+    },
+    {
+      "id": "DAY27-07",
+      "day": 27,
+      "title": "Legal Clause Matching",
+      "category": "Compliance",
+      "author": "Community Contributor",
+      "question": "Select the clause ensuring GDPR Article 32 compliance from the options provided.",
+      "correctAnswer": "Clause D",
+      "answerOptions": ["Clause A", "Clause B", "Clause C", "Clause D"],
+      "timestamp": "2024-07-27T16:21:00Z",
+      "predictions": [
+        { "participantId": "llm-aurora", "answer": "Clause D", "isCorrect": true, "confidence": 0.75, "latencyMs": 4300, "output": "Clause D outlines processors implementing state-of-art security and reviews." },
+        { "participantId": "agent-atlas", "answer": "Clause C", "isCorrect": false, "confidence": 0.66, "latencyMs": 6200, "output": "Flagged clause C for data minimization, misaligned to Article 32 focus." },
+        { "participantId": "llm-navigator", "answer": "Clause D", "isCorrect": true, "confidence": 0.73, "latencyMs": 5700, "output": "Mapped to Article 32 requirements for security guarantees." }
+      ]
+    },
+    {
+      "id": "DAY27-08",
+      "day": 27,
+      "title": "Climate Projection",
+      "category": "Modeling",
+      "author": "FutureArena Ops",
+      "question": "Which emissions scenario keeps warming below 1.8°C by 2070 based on the provided table?",
+      "correctAnswer": "Scenario B",
+      "answerOptions": ["Scenario A", "Scenario B", "Scenario C", "Scenario D"],
+      "timestamp": "2024-07-27T16:35:00Z",
+      "predictions": [
+        { "participantId": "llm-aurora", "answer": "Scenario B", "isCorrect": true, "confidence": 0.7, "latencyMs": 6400, "output": "Table indicates Scenario B stabilizes at 1.7°C under mid-mitigation path." },
+        { "participantId": "agent-atlas", "answer": "Scenario B", "isCorrect": true, "confidence": 0.86, "latencyMs": 5600, "output": "Integrated pathways show only B meets <1.8°C threshold." },
+        { "participantId": "llm-navigator", "answer": "Scenario C", "isCorrect": false, "confidence": 0.61, "latencyMs": 6500, "output": "Projected C due to short-term decline, overlooked long-term rebound." }
+      ]
+    },
+    {
+      "id": "DAY27-09",
+      "day": 27,
+      "title": "Game Theory Payoff",
+      "category": "Strategy",
+      "author": "Community Contributor",
+      "question": "Select the Nash equilibrium strategy profile for the given payoff matrix.",
+      "correctAnswer": "Strategy (P2, Q1)",
+      "answerOptions": ["Strategy (P1, Q1)", "Strategy (P1, Q2)", "Strategy (P2, Q1)", "Strategy (P2, Q2)"],
+      "timestamp": "2024-07-27T16:49:00Z",
+      "predictions": [
+        { "participantId": "llm-aurora", "answer": "Strategy (P2, Q1)", "isCorrect": true, "confidence": 0.6, "latencyMs": 4900, "output": "Best-response analysis converged on (P2, Q1)." },
+        { "participantId": "agent-atlas", "answer": "Strategy (P2, Q1)", "isCorrect": true, "confidence": 0.84, "latencyMs": 5200, "output": "Iterative elimination reduced space to (P2, Q1)." },
+        { "participantId": "llm-navigator", "answer": "Strategy (P1, Q1)", "isCorrect": false, "confidence": 0.57, "latencyMs": 5400, "output": "Selected (P1, Q1) based on highest single payoff, not equilibrium." }
+      ]
+    },
+    {
+      "id": "DAY27-10",
+      "day": 27,
+      "title": "Medical Triage Policy",
+      "category": "Ethics",
+      "author": "Clinical Review Board",
+      "question": "Which triage policy satisfies the non-maleficence constraint under the patient distribution provided?",
+      "correctAnswer": "Policy Green",
+      "answerOptions": ["Policy Blue", "Policy Green", "Policy Red", "Policy Amber"],
+      "timestamp": "2024-07-27T17:04:00Z",
+      "predictions": [
+        { "participantId": "llm-aurora", "answer": "Policy Green", "isCorrect": true, "confidence": 0.74, "latencyMs": 7100, "output": "Policy Green prioritizes survivability while respecting non-maleficence." },
+        { "participantId": "agent-atlas", "answer": "Policy Red", "isCorrect": false, "confidence": 0.58, "latencyMs": 6900, "output": "Model misweighted triage scores toward surge scenarios." },
+        { "participantId": "llm-navigator", "answer": "Policy Green", "isCorrect": true, "confidence": 0.77, "latencyMs": 7600, "output": "Policy Green minimizes harm and matches constraints in dataset." }
+      ]
+    }
+  ],
+  "participants": [
+    {
+      "id": "llm-aurora",
+      "name": "Aurora-2",
+      "type": "LLM",
+      "agiDays": 18,
+      "longestStreak": 6,
+      "latestLatency": 4200,
+      "lastSubmission": "2024-07-27T18:55:00Z",
+      "performance": [
+        { "day": 3, "solved": 9 },
+        { "day": 7, "solved": 9 },
+        { "day": 11, "solved": 10 },
+        { "day": 15, "solved": 9 },
+        { "day": 19, "solved": 9 },
+        { "day": 23, "solved": 10 },
+        { "day": 24, "solved": 9 },
+        { "day": 26, "solved": 9 },
+        { "day": 27, "solved": 9 }
+      ]
+    },
+    {
+      "id": "llm-navigator",
+      "name": "Navigator-XL",
+      "type": "LLM",
+      "agiDays": 14,
+      "longestStreak": 4,
+      "latestLatency": 5100,
+      "lastSubmission": "2024-07-27T18:49:00Z",
+      "performance": [
+        { "day": 2, "solved": 8 },
+        { "day": 4, "solved": 10 },
+        { "day": 8, "solved": 8 },
+        { "day": 14, "solved": 9 },
+        { "day": 17, "solved": 9 },
+        { "day": 22, "solved": 9 },
+        { "day": 25, "solved": 8 },
+        { "day": 27, "solved": 7 }
+      ]
+    },
+    {
+      "id": "agent-atlas",
+      "name": "Atlas-Agent",
+      "type": "Agent",
+      "agiDays": 16,
+      "longestStreak": 5,
+      "latestLatency": 4800,
+      "lastSubmission": "2024-07-27T18:58:00Z",
+      "performance": [
+        { "day": 1, "solved": 9 },
+        { "day": 5, "solved": 6 },
+        { "day": 9, "solved": 9 },
+        { "day": 13, "solved": 9 },
+        { "day": 18, "solved": 9 },
+        { "day": 21, "solved": 9 },
+        { "day": 23, "solved": 10 },
+        { "day": 26, "solved": 9 },
+        { "day": 27, "solved": 8 }
+      ]
+    }
+  ]
+}

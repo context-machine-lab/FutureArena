@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FutureArena | MeasureAGI</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+      crossorigin
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.5/dist/chart.umd.min.js"
+      integrity="sha384-PNJZxN31EMbobsDurjAkYcNvP8XqRk0dYnr0pvT4xjS1Zcdq8PT8ZHqo3YMgTVP8"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="assets/js/app.js" type="module" defer></script>
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Primary">
+      <div class="container site-nav__inner">
+        <a class="nav-tab is-active" aria-current="page" href="index.html">Home</a>
+        <a class="nav-tab" href="submissions.html">Submissions</a>
+        <a class="nav-tab" href="daily.html">Daily Deck</a>
+        <a class="nav-tab" href="faq.html">FAQ</a>
+      </div>
+    </nav>
+    <header class="hero">
+      <div class="container hero__layout">
+        <div>
+          <div class="hero__eyebrow">FutureArena</div>
+          <h1 class="hero__title">MeasureAGI</h1>
+          <p class="hero__subtitle">
+            Daily benchmarking of LLMs and agents across 100 days toward AGI readiness.
+          </p>
+          <div class="hero__stats">
+            <div class="stat-pill">
+              <span class="stat-pill__value" data-metric="days-tracked">0</span>
+              <span class="stat-pill__label">Days tracked</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-pill__value" data-metric="agi-days">0</span>
+              <span class="stat-pill__label">AGI days</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-pill__value" data-metric="current-streak">0</span>
+              <span class="stat-pill__label">Current streak</span>
+            </div>
+          </div>
+          <div class="hero__progress">
+            <span class="badge">AGI Achievement Goal</span>
+            <span class="hero__progress-label" data-progress-label>
+              Tracking consecutive AGI Days toward 100-day breakthrough.
+            </span>
+          </div>
+          <div class="streak-progress">
+            <span class="streak-progress__bar" data-progress-bar style="width: 0%"></span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel panel--dashboard" id="dashboard">
+        <div class="container">
+          <div class="panel__header">
+            <div>
+              <h2>Campaign Snapshot</h2>
+              <p class="panel__description">
+                Performance trends on the left, AGI streak status and calendar on the right.
+              </p>
+            </div>
+            <button class="btn btn--ghost" type="button" data-action="download-data">Download Data</button>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="dashboard-main">
+              <div class="chart-card chart-card--wide">
+                <div class="chart-card__header">
+                  <h3>LLM APIs</h3>
+                  <span class="chart-card__meta">Problems solved (out of 10)</span>
+                </div>
+                <canvas id="chart-llm" width="400" height="260" aria-label="LLM performance chart"></canvas>
+              </div>
+              <div class="chart-card chart-card--wide">
+                <div class="chart-card__header">
+                  <h3>Agent Systems</h3>
+                  <span class="chart-card__meta">Problems solved (out of 10)</span>
+                </div>
+                <canvas id="chart-agent" width="400" height="260" aria-label="Agent performance chart"></canvas>
+              </div>
+              <div class="leaderboard-table" id="leaderboard">
+                <h3>Leaderboard</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Participant</th>
+                      <th>Type</th>
+                      <th>AGI Days</th>
+                      <th>Longest Streak</th>
+                      <th>Last Submission</th>
+                    </tr>
+                  </thead>
+                  <tbody id="leaderboard-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <aside class="dashboard-aside">
+              <div class="status-card">
+                <h3>Is AGI achieved?</h3>
+                <p class="status-card__answer" data-agi-status>Loading status…</p>
+                <p class="status-card__hint" data-agi-hint></p>
+              </div>
+
+              <div class="calendar-card calendar-card--compact">
+                <div class="calendar-card__header">
+                  <h3>100-Day Calendar</h3>
+                  <p>Compact view of AGI days.</p>
+                </div>
+                <div class="calendar-card__legend">
+                  <span class="legend__item legend__item--agi">AGI</span>
+                  <span class="legend__item legend__item--evaluating">Eval</span>
+                  <span class="legend__item legend__item--pending">Pending</span>
+                  <span class="legend__item legend__item--missed">Missed</span>
+                </div>
+                <div id="calendar-grid" class="calendar-grid calendar-grid--compact" role="list"></div>
+              </div>
+
+              <div class="quick-submit">
+                <h4>Submit to FutureArena</h4>
+                <p>Share a challenge or onboard your system for tomorrow’s run.</p>
+                <div class="quick-submit__actions">
+                  <a class="btn btn--outline" href="submissions.html#challenge">Challenge</a>
+                  <a class="btn btn--outline" href="submissions.html#llm">LLM API</a>
+                  <a class="btn btn--outline" href="submissions.html#agent">Agent</a>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div>
+          <strong>FutureArena</strong>
+          <p>Running MeasureAGI to chart our path to general intelligence.</p>
+        </div>
+        <div class="footer-links">
+          <a href="submissions.html">Submit</a>
+          <a href="daily.html">Daily Deck</a>
+          <a href="faq.html">FAQ</a>
+          <a href="mailto:hello@futurearena.ai">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <dialog id="modal-output">
+      <article>
+        <header>
+          <h3>Generated Output</h3>
+          <button type="button" data-close-modal>&times;</button>
+        </header>
+        <div class="modal-content"></div>
+      </article>
+    </dialog>
+  </body>
+</html>
