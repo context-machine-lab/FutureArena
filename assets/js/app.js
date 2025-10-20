@@ -116,6 +116,11 @@ function updateAgiStatus(streaks) {
   if (!statusEl) return;
   const hintEl = document.querySelector("[data-agi-hint]");
 
+  statusEl.dataset.state = "pending";
+  if (hintEl) {
+    hintEl.textContent = "";
+  }
+
   if (streaks.current >= 100) {
     statusEl.textContent = "Yes — sustained AGI performance";
     statusEl.dataset.state = "yes";
@@ -144,6 +149,12 @@ function renderCalendar() {
   const calendarRecords = dedupeCalendarMap();
   const fragment = document.createDocumentFragment();
   const currentDay = STATE.meta?.currentDay ?? 0;
+  const paletteByStatus = {
+    agi: { color: "34, 197, 94", baseAlpha: 0.35 },
+    evaluating: { color: "37, 99, 235", baseAlpha: 0.32 },
+    pending: { color: "245, 158, 11", baseAlpha: 0.24 },
+    missed: { color: "220, 38, 38", baseAlpha: 0.32 }
+  };
 
   for (let day = 1; day <= 100; day += 1) {
     const entry = calendarRecords.get(day);
@@ -151,14 +162,36 @@ function renderCalendar() {
     const dayCard = document.createElement("article");
     dayCard.className = "calendar-day";
     dayCard.dataset.status = status;
+    dayCard.dataset.day = day.toString();
     dayCard.setAttribute("tabindex", "0");
+    dayCard.setAttribute("role", "button");
 
     const statusLabel = STATUS_LABELS[status] || "Unknown";
-    const tooltip = buildCalendarTooltip(entry, statusLabel);
+    const tooltip = buildCalendarTooltip(day, entry, statusLabel);
 
+    dayCard.setAttribute("aria-label", `Day ${day}: ${statusLabel}`);
+    dayCard.title = `Day ${day}: ${statusLabel}`;
+    if (day === currentDay) {
+      dayCard.dataset.today = "true";
+    }
+    const palette = paletteByStatus[status] || { color: "226, 232, 240", baseAlpha: 0.4 };
+    let alpha = palette.baseAlpha;
+    if (entry?.correct != null) {
+      const accuracyRatio = Math.min(Math.max(entry.correct / 10, 0), 1);
+      if (status === "agi") {
+        alpha = 0.25 + accuracyRatio * 0.7;
+      } else if (status === "missed") {
+        alpha = 0.25 + (1 - accuracyRatio) * 0.5;
+      } else if (status === "evaluating") {
+        alpha = 0.25 + accuracyRatio * 0.4;
+      } else if (status === "pending") {
+        alpha = 0.18 + accuracyRatio * 0.3;
+      }
+    }
+    const clampedAlpha = Math.min(Math.max(alpha, 0.12), 0.95);
+    dayCard.style.setProperty("--day-color", `rgba(${palette.color}, ${clampedAlpha.toFixed(2)})`);
     dayCard.innerHTML = `
-      <div class="calendar-day__index">Day ${day}</div>
-      <div class="calendar-day__status">${statusLabel}</div>
+      <span class="sr-only">Day ${day}: ${statusLabel}</span>
       ${tooltip}
     `;
 
@@ -168,11 +201,11 @@ function renderCalendar() {
   grid.appendChild(fragment);
 }
 
-function buildCalendarTooltip(entry, statusLabel) {
+function buildCalendarTooltip(day, entry, statusLabel) {
   if (!entry) {
     return `
       <div class="calendar-day__tooltip">
-        <strong>${statusLabel}</strong>
+        <strong>Day ${day} · ${statusLabel}</strong>
         <p>Challenges will be scheduled when the campaign reaches this day.</p>
       </div>
     `;
@@ -183,7 +216,7 @@ function buildCalendarTooltip(entry, statusLabel) {
   const performer = entry.topPerformer ? `<p><strong>Top Performer:</strong> ${entry.topPerformer}</p>` : "";
   return `
     <div class="calendar-day__tooltip">
-      <strong>${statusLabel}</strong>
+      <strong>Day ${day} · ${statusLabel}</strong>
       <p><strong>Accuracy:</strong> ${solved}/10</p>
       ${performer}
       ${note}
@@ -573,18 +606,61 @@ function renderChartForType(type, canvasId) {
   }
 
   const participants = STATE.participants.filter((entry) => entry.type === type);
+  const participantsById = new Map(STATE.participants.map((p) => [p.id, p]));
 
   const existingEmpty = container?.querySelector(".chart-empty");
   if (existingEmpty) {
     existingEmpty.remove();
   }
 
-  if (!participants.length) {
+  const aggregateData = buildAggregateSeries(type, participantsById);
+  const colors = ["#2563eb", "#f97316", "#059669", "#7c3aed", "#dc2626", "#0f766e"];
+
+  const datasets = [];
+
+  if (aggregateData.length) {
+    datasets.push({
+      label: type === "LLM" ? "LLM APIs · Avg solved" : "Agent Systems · Avg solved",
+      data: aggregateData,
+      borderColor: type === "LLM" ? "#2563eb" : "#059669",
+      backgroundColor: `${type === "LLM" ? "#2563eb" : "#059669"}1f`,
+      borderWidth: 2.8,
+      pointRadius: 3,
+      pointHoverRadius: 5,
+      fill: true,
+      spanGaps: true,
+      tension: 0.32
+    });
+  }
+
+  const rankedParticipants = participants
+    .slice()
+    .sort((a, b) => (b.agiDays || 0) - (a.agiDays || 0))
+    .slice(0, 4);
+
+  rankedParticipants.forEach((participant, index) => {
+    const sortedPerf = [...(participant.performance || [])].sort((a, b) => a.day - b.day);
+    if (!sortedPerf.length) return;
+    datasets.push({
+      label: participant.name,
+      data: sortedPerf.map((point) => ({ x: point.day, y: point.solved })),
+      borderColor: colors[index % colors.length],
+      backgroundColor: `${colors[index % colors.length]}33`,
+      borderWidth: 2,
+      pointRadius: 3.5,
+      pointHoverRadius: 5,
+      fill: false,
+      spanGaps: true,
+      tension: 0.28
+    });
+  });
+
+  if (!datasets.some((dataset) => dataset.data.length)) {
     if (container) {
       container.classList.add("is-empty");
       const empty = document.createElement("p");
       empty.className = "chart-empty";
-      empty.textContent = `No ${type === "LLM" ? "LLM API" : "Agent System"} submissions yet.`;
+      empty.textContent = `No ${type === "LLM" ? "LLM API" : "Agent System"} data available yet.`;
       container.appendChild(empty);
     }
     return;
@@ -594,30 +670,29 @@ function renderChartForType(type, canvasId) {
     container.classList.remove("is-empty");
   }
 
-  const colors = ["#2563eb", "#f97316", "#059669", "#7c3aed", "#dc2626", "#0f766e"];
-  const datasets = participants.map((participant, index) => {
-    const sortedPerf = [...(participant.performance || [])].sort((a, b) => a.day - b.day);
-    return {
-      label: participant.name,
-      data: sortedPerf.map((point) => ({ x: point.day, y: point.solved })),
-      borderColor: colors[index % colors.length],
-      backgroundColor: `${colors[index % colors.length]}33`,
-      borderWidth: 2,
-      tension: 0.24,
-      pointRadius: 3.5
-    };
-  });
-
   charts[key] = new Chart(canvas, {
     type: "line",
     data: {
       datasets
     },
     options: {
+      maintainAspectRatio: false,
       responsive: true,
       interaction: {
         mode: "nearest",
         intersect: false
+      },
+      elements: {
+        line: {
+          tension: 0.32
+        },
+        point: {
+          radius: 3.5,
+          hoverRadius: 5.5
+        }
+      },
+      layout: {
+        padding: 6
       },
       scales: {
         x: {
@@ -625,24 +700,26 @@ function renderChartForType(type, canvasId) {
           min: 1,
           max: 100,
           title: { display: true, text: "Day" },
-          ticks: { color: "rgba(75,85,99,0.8)" },
-          grid: { color: "rgba(209,213,219,0.35)" }
+          ticks: { color: "rgba(71,85,105,0.9)", stepSize: 5 },
+          grid: { color: "rgba(209,213,219,0.3)", drawBorder: false }
         },
         y: {
           min: 0,
           max: 10,
           title: { display: true, text: "Problems Solved" },
-          ticks: { stepSize: 1, color: "rgba(75,85,99,0.8)" },
-          grid: { color: "rgba(209,213,219,0.35)" }
+          ticks: { stepSize: 1, color: "rgba(71,85,105,0.9)" },
+          grid: { color: "rgba(209,213,219,0.3)", drawBorder: false }
         }
       },
       plugins: {
         legend: {
+          position: "bottom",
           labels: {
             color: "rgba(55,65,81,0.85)"
           }
         },
         tooltip: {
+          displayColors: false,
           callbacks: {
             label(context) {
               const { dataset, parsed } = context;
@@ -653,6 +730,52 @@ function renderChartForType(type, canvasId) {
       }
     }
   });
+
+  requestAnimationFrame(() => {
+    charts[key].resize();
+  });
+}
+
+function buildAggregateSeries(type, participantsById) {
+  const dayTotals = new Map();
+
+  const addValue = (day, solved, possible = 10) => {
+    if (!dayTotals.has(day)) {
+      dayTotals.set(day, { solved: 0, count: 0, max: 0 });
+    }
+    const bucket = dayTotals.get(day);
+    bucket.solved += solved;
+    bucket.count += 1;
+    bucket.max = Math.max(bucket.max, possible);
+  };
+
+  // Participant performance data (already normalized to 0-10 solved problems)
+  STATE.participants.forEach((participant) => {
+    if (participant.type !== type) return;
+    (participant.performance || []).forEach((point) => {
+      if (typeof point.day !== "number" || typeof point.solved !== "number") return;
+      addValue(point.day, Math.min(Math.max(point.solved, 0), 10));
+    });
+  });
+
+  // Daily challenge predictions (convert accuracy ratio to out-of-10 scale)
+  STATE.dailyChallenges.forEach((challenge) => {
+    const day = challenge.day;
+    (challenge.predictions || []).forEach((prediction) => {
+      const participant = participantsById.get(prediction.participantId);
+      if (!participant || participant.type !== type) return;
+      const solved = prediction.isCorrect ? 10 : 0;
+      addValue(day, solved, 10);
+    });
+  });
+
+  return Array.from(dayTotals.entries())
+    .map(([day, totals]) => {
+      if (!totals.count) return { x: Number(day), y: 0 };
+      const averageSolved = totals.solved / totals.count;
+      return { x: Number(day), y: Number(averageSolved.toFixed(2)) };
+    })
+    .sort((a, b) => a.x - b.x);
 }
 
 function initModal() {

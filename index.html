@@ -17,7 +17,7 @@
     />
     <script
       src="https://cdn.jsdelivr.net/npm/chart.js@4.4.5/dist/chart.umd.min.js"
-      integrity="sha384-PNJZxN31EMbobsDurjAkYcNvP8XqRk0dYnr0pvT4xjS1Zcdq8PT8ZHqo3YMgTVP8"
+      integrity="sha384-MY7MzGt1eo8yEmzMhq5OA4nmpW53GMFFJkybLBGnp9KKnz4YKarSqrHpEe+Th9qH"
       crossorigin="anonymous"
       defer
     ></script>
@@ -32,44 +32,40 @@
         <a class="nav-tab" href="faq.html">FAQ</a>
       </div>
     </nav>
-    <header class="hero">
-      <div class="container hero__layout">
-        <div>
-          <div class="hero__eyebrow">FutureArena</div>
-          <h1 class="hero__title">MeasureAGI</h1>
-          <p class="hero__subtitle">
-            Daily benchmarking of LLMs and agents across 100 days toward AGI readiness.
-          </p>
-          <div class="hero__stats">
-            <div class="stat-pill">
-              <span class="stat-pill__value" data-metric="days-tracked">0</span>
-              <span class="stat-pill__label">Days tracked</span>
-            </div>
-            <div class="stat-pill">
-              <span class="stat-pill__value" data-metric="agi-days">0</span>
-              <span class="stat-pill__label">AGI days</span>
-            </div>
-            <div class="stat-pill">
-              <span class="stat-pill__value" data-metric="current-streak">0</span>
-              <span class="stat-pill__label">Current streak</span>
-            </div>
-          </div>
-          <div class="hero__progress">
-            <span class="badge">AGI Achievement Goal</span>
-            <span class="hero__progress-label" data-progress-label>
-              Tracking consecutive AGI Days toward 100-day breakthrough.
-            </span>
-          </div>
-          <div class="streak-progress">
-            <span class="streak-progress__bar" data-progress-bar style="width: 0%"></span>
-          </div>
-        </div>
-      </div>
-    </header>
-
     <main>
       <section class="panel panel--dashboard" id="dashboard">
         <div class="container">
+          <div class="snapshot-header">
+            <div class="snapshot-header__title">
+              <span class="snapshot-header__eyebrow">FutureArena</span>
+              <h1>MeasureAGI</h1>
+              <p>Daily benchmarking of LLMs and agents across 100 days toward AGI readiness.</p>
+            </div>
+            <div class="snapshot-header__stats">
+              <div class="stat-pill">
+                <span class="stat-pill__value" data-metric="days-tracked">0</span>
+                <span class="stat-pill__label">Days tracked</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-pill__value" data-metric="agi-days">0</span>
+                <span class="stat-pill__label">AGI days</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-pill__value" data-metric="current-streak">0</span>
+                <span class="stat-pill__label">Current streak</span>
+              </div>
+            </div>
+            <div class="snapshot-header__progress">
+              <span class="badge">AGI Achievement Goal</span>
+              <span class="snapshot-header__progress-label" data-progress-label>
+                Tracking consecutive AGI Days toward 100-day breakthrough.
+              </span>
+              <div class="streak-progress">
+                <span class="streak-progress__bar" data-progress-bar style="width: 0%"></span>
+              </div>
+            </div>
+          </div>
+
           <div class="panel__header">
             <div>
               <h2>Campaign Snapshot</h2>
