@@ -22,10 +22,20 @@
   <body>
     <nav class="site-nav" aria-label="Primary">
       <div class="container site-nav__inner">
-        <a class="nav-tab" href="index.html">Home</a>
-        <a class="nav-tab" href="submissions.html">Submissions</a>
-        <a class="nav-tab is-active" aria-current="page" href="daily.html">Daily Deck</a>
-        <a class="nav-tab" href="faq.html">FAQ</a>
+        <button class="hamburger-menu" aria-label="Toggle menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-tabs-wrapper">
+          <a class="nav-tab" href="index.html">Home</a>
+          <a class="nav-tab" href="submissions.html">Submissions</a>
+          <a class="nav-tab is-active" aria-current="page" href="daily.html">Daily Deck</a>
+          <a class="nav-tab" href="faq.html">FAQ</a>
+        </div>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+          <span class="theme-icon">☀️</span>
+        </button>
       </div>
     </nav>
 

@@ -39,6 +39,8 @@ const charts = {
 let deadlineTimer;
 
 async function init() {
+  initThemeToggle();
+  initMobileMenu();
   await loadData();
   renderMetrics();
   renderCalendar();
@@ -618,18 +620,38 @@ function renderChartForType(type, canvasId) {
 
   const datasets = [];
 
+  // Create gradient for aggregate line
+  const createGradient = (ctx, color1, color2) => {
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, color1);
+    gradient.addColorStop(1, color2);
+    return gradient;
+  };
+
   if (aggregateData.length) {
+    const ctx = canvas.getContext('2d');
+    const gradient = createGradient(
+      ctx,
+      type === "LLM" ? "rgba(37, 99, 235, 0.4)" : "rgba(5, 150, 105, 0.4)",
+      type === "LLM" ? "rgba(37, 99, 235, 0.05)" : "rgba(5, 150, 105, 0.05)"
+    );
+
     datasets.push({
       label: type === "LLM" ? "LLM APIs · Avg solved" : "Agent Systems · Avg solved",
       data: aggregateData,
       borderColor: type === "LLM" ? "#2563eb" : "#059669",
-      backgroundColor: `${type === "LLM" ? "#2563eb" : "#059669"}1f`,
-      borderWidth: 2.8,
-      pointRadius: 3,
-      pointHoverRadius: 5,
+      backgroundColor: gradient,
+      borderWidth: 3,
+      pointRadius: 4,
+      pointHoverRadius: 6,
+      pointBackgroundColor: type === "LLM" ? "#2563eb" : "#059669",
+      pointBorderColor: "#fff",
+      pointBorderWidth: 2,
+      pointHoverBackgroundColor: type === "LLM" ? "#1d4ed8" : "#047857",
+      pointHoverBorderWidth: 3,
       fill: true,
       spanGaps: true,
-      tension: 0.32
+      tension: 0.35
     });
   }
 
@@ -641,17 +663,23 @@ function renderChartForType(type, canvasId) {
   rankedParticipants.forEach((participant, index) => {
     const sortedPerf = [...(participant.performance || [])].sort((a, b) => a.day - b.day);
     if (!sortedPerf.length) return;
+    const color = colors[index % colors.length];
     datasets.push({
       label: participant.name,
       data: sortedPerf.map((point) => ({ x: point.day, y: point.solved })),
-      borderColor: colors[index % colors.length],
-      backgroundColor: `${colors[index % colors.length]}33`,
-      borderWidth: 2,
-      pointRadius: 3.5,
-      pointHoverRadius: 5,
+      borderColor: color,
+      backgroundColor: `${color}20`,
+      borderWidth: 2.5,
+      pointRadius: 4,
+      pointHoverRadius: 6,
+      pointBackgroundColor: color,
+      pointBorderColor: "#fff",
+      pointBorderWidth: 2,
+      pointHoverBackgroundColor: color,
+      pointHoverBorderWidth: 3,
       fill: false,
       spanGaps: true,
-      tension: 0.28
+      tension: 0.32
     });
   });
 
@@ -678,21 +706,27 @@ function renderChartForType(type, canvasId) {
     options: {
       maintainAspectRatio: false,
       responsive: true,
+      animation: {
+        duration: 1200,
+        easing: 'easeInOutQuart',
+        animateScale: true,
+        animateRotate: true
+      },
       interaction: {
         mode: "nearest",
         intersect: false
       },
       elements: {
         line: {
-          tension: 0.32
+          tension: 0.35
         },
         point: {
-          radius: 3.5,
-          hoverRadius: 5.5
+          radius: 4,
+          hoverRadius: 6
         }
       },
       layout: {
-        padding: 6
+        padding: 8
       },
       scales: {
         x: {
@@ -827,6 +861,66 @@ function initToolbar() {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+  });
+}
+
+/* Theme & UI ------------------------------------------------------------- */
+
+function initThemeToggle() {
+  const themeToggle = document.querySelector('.theme-toggle');
+  const themeIcon = document.querySelector('.theme-icon');
+  if (!themeToggle || !themeIcon) return;
+
+  // Load saved theme or default to light
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  themeIcon.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+
+    // Update chart colors if charts exist
+    if (charts.llm) {
+      charts.llm.update();
+    }
+    if (charts.agent) {
+      charts.agent.update();
+    }
+  });
+}
+
+function initMobileMenu() {
+  const hamburger = document.querySelector('.hamburger-menu');
+  const navWrapper = document.querySelector('.nav-tabs-wrapper');
+  if (!hamburger || !navWrapper) return;
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('is-open');
+    navWrapper.classList.toggle('is-open');
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  // Close menu when clicking a nav link
+  navWrapper.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      hamburger.classList.remove('is-open');
+      navWrapper.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (event) => {
+    if (!hamburger.contains(event.target) && !navWrapper.contains(event.target)) {
+      hamburger.classList.remove('is-open');
+      navWrapper.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
   });
 }
 
